@@ -1,0 +1,135 @@
+<div class="page-header">
+    <h1>MEAN Stack Todo App</h1>
+</div>            
+
+
+<div class="row">
+    <div class="col-sm-4">
+        <!-- Create New List -->
+        <form id="todo-list" ng-submit="createList()">
+            <div class="input-group">                            
+                <input type="text" class="form-control input-lg" 
+                        placeholder="Create New List" ng-model="formData.listname" />
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-plus"></span></button>
+                </span>
+            </div>
+        </form>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-list"></span>List Choices
+                <div class="pull-right action-buttons">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-trash"></span>Delete</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-flag"></span>Flag</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="list in lists" ng-class="{'active': selected.id == list._id }">
+                            {{ list.listname }}  <span class="label label-primary"> {{ list.todos.length }}</span>
+                        <div class="pull-right action-buttons">
+                            <a href="#/home/{{list._id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="" ng-click="deleteList(list._id)" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                        </div>
+                    </li>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>
+                            Total Count <span class="label label-info">{{ lists.length }}</span></h6>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="pagination pagination-sm pull-right">
+                            <li class="disabled"><a href="javascript:void(0)">«</a></li>
+                            <li class="active"><a href="javascript:void(0)">1 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                              <li><a href="javascript:void(0)">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+    <div class="col-sm-8" ng-show="lists.length > 0">
+       
+        <div>
+        <!-- FORM TO CREATE TODOS -->
+            <form id="todo-list" ng-submit="createTodo()"> <!-- does the ng-submit data param get passed after list._id? -->
+                <div class="input-group">                            
+                    <input type="text" class="form-control input-lg" 
+                            placeholder="Add Task" ng-model="todoFormData.todo" />
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-lg" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                </span></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <!-- DISPLAY TODOS w CHECKBOXES -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">                
+                    <span><span class="glyphicon glyphicon-list"></span>Tasks Items for {{ list.listname }}</span> 
+
+                <div class="pull-right action-buttons">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href=""><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-trash"></span>Delete</a></li>
+                            <li><a href=""><span class="glyphicon glyphicon-flag"></span>Flag</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" ng-hide="list.todos.length > 0">
+           	    <p class="text-center"> You currently have no tasks for <strong>{{ list.listname }}</strong></p>
+            </div>
+            <div class="panel-body" ng-show="list.todos.length > 0">
+                
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="todo in list.todos">
+                        <div class="checkbox">
+                            <input type="checkbox" ng-click="deleteTodo(todo._id)">{{ todo.todo }}
+                        </div>
+                        <div class="pull-right action-buttons">
+                            <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                        </div>
+                    </li>
+            </div>
+            <div class="panel-footer" ng-show="list.todos.length > 0">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Total Task Count <span class="label label-info">{{ list.todos.length }}</span></h5>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="pagination pagination-sm pull-right">
+                            <li class="disabled"><a href="javascript:void(0)">«</a></li>
+                            <li class="active"><a href="javascript:void(0)">1 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                            <li><a href="">4</a></li>
+                            <li><a href="">5</a></li>
+                            <li><a href="javascript:void(0)">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <form ng-show="list.todos.length > 0"><button class="btn btn-default btn-md">Show Completed To-Do's</button></form>
+    </div>
+</div>
